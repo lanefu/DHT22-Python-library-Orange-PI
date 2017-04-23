@@ -1,27 +1,36 @@
-DHT11 Python library
-This simple class can be used for reading temperature and humidity values from DHT11 sensor on Orange PI.
+DHT22 Python library
+This simple class can be used for reading temperature and humidity values from DHT22 sensor on Orange PI.
 
 # Usage
 
-Instantiate the DHT11 class with the pin number as constructor parameter.
-Call read() method, which will return DHT11Result object with actual values and error code.
-For example:
+Example:
 ```python
 from pyA20.gpio import gpio
 from pyA20.gpio import port
-
-#initialize GPIO
+ 
+#import RPi.GPIO as GPIO
+import dht22
+import time
+import datetime
+ 
+# initialize GPIO
+#gpio.setwarnings(False)
+#gpio.setmode(GPIO.BCM)
 PIN2 = port.PA6
 gpio.init()
-
-#read data using pin port.PA6
-instance = dht11.DHT11(pin=PIN2)
-result = instance.read()
-
-if result.is_valid():
-    print("Temperature: %d C" % result.temperature)
-    print("Humidity: %d %%" % result.humidity)
-else:
-    print("Error: %d" % result.error_code)
+#gpio.cleanup()
+ 
+ 
+# read data using pin 14
+instance = dht22.DHT22(pin=PIN2)
+ 
+while True:
+    result = instance.read()
+    if result.is_valid():
+        print("Last valid input: " + str(datetime.datetime.now()))
+        print("Temperature: %.2f C" % result.temperature)
+        print("Humidity: %.2f %%" % result.humidity)
+ 
+    time.sleep(1)
 ```    
-For working example, see `dht11_example.py` (you probably need to adjust pin for your configuration)
+Please see tutorial:
