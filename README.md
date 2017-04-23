@@ -34,3 +34,4 @@ while True:
     time.sleep(1)
 ```    
 Please see tutorial:
+http://www.piprojects.xyz/temperature-sensor-orange-pi-python-code/
