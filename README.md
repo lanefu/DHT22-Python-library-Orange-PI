@@ -3,6 +3,7 @@ This simple class can be used for reading temperature and humidity values from D
 
 ## prep ##
 
+1. install kernel headers `armbian-config`
 1. get preresq `apt install build-essential autoconf doxygen help2man`
 1. download,build, and install `libgpiod`
 1. downlaod, build, and install `OrangePi.GPI` 
