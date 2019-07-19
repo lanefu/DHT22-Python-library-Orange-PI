@@ -1,6 +1,6 @@
 import time
-from pyA20.gpio import gpio
-from pyA20.gpio import port
+import OPi.GPIO as gpio
+#from OPi.gpio import port
 #import RPi
 
 
@@ -27,13 +27,13 @@ class DHT22Result:
 class DHT22:
     'DHT22 sensor reader class for Raspberry'
 
-    __pin = 0
+    __pin = 13
 
     def __init__(self, pin):
         self.__pin = pin
 
     def read(self):
-        gpio.setcfg(self.__pin, gpio.OUTPUT)
+        gpio.setup(self.__pin, gpio.OUT)
 
         # send initial high
         self.__send_and_sleep(gpio.HIGH, 0.05)
@@ -42,9 +42,8 @@ class DHT22:
         self.__send_and_sleep(gpio.LOW, 0.02)
 
         # change to input using pull up
-        #gpio.setcfg(self.__pin, gpio.INPUT, gpio.PULLUP)
-	gpio.setcfg(self.__pin, gpio.INPUT)
-	gpio.pullup(self.__pin, gpio.PULLUP)
+        #gpio.setcfg(self.__pin, gpio.IN, gpio.PULLUP)
+        gpio.setup(self.__pin, gpio.IN, pull_up_down=gpio.PUD_OFF)
 
 
         # collect data into an array
@@ -69,7 +68,7 @@ class DHT22:
             return DHT22Result(DHT22Result.ERR_CRC, 0, 0)
 
         # ok, we have valid data, return it
-        return DHT22Result(DHT22Result.ERR_NO_ERROR, 
+        return DHT22Result(DHT22Result.ERR_NO_ERROR,
 			   (((the_bytes[2] & 0x7F)<<8)+the_bytes[3])/10.00,
 			   ((the_bytes[0]<<8)+the_bytes[1])/10.00)
 

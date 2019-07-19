@@ -1,5 +1,5 @@
-from pyA20.gpio import gpio
-from pyA20.gpio import port
+import OPi.GPIO as gpio
+import logging
 
 #import RPi.GPIO as GPIO
 import dht22
@@ -8,14 +8,15 @@ import datetime
 
 # initialize GPIO
 #gpio.setwarnings(False)
-#gpio.setmode(GPIO.BCM)
-PIN2 = port.PA6
-gpio.init()
+gpio.setboard(gpio.PRIME)
+gpio.setmode(gpio.SOC)
+#PIN2 = port.PA13
+pin = gpio.PA + 10
 #gpio.cleanup()
 
-
+gpio.setup(pin, gpio.IN, pull_up_down=gpio.PUD_OFF)
 # read data using pin 14
-instance = dht22.DHT22(pin=PIN2)
+instance = dht22.DHT22(pin)
 
 while True:
     result = instance.read()
