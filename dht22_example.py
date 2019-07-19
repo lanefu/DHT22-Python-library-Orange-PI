@@ -21,8 +21,11 @@ instance = dht22.DHT22(pin)
 while True:
     result = instance.read()
     if result.is_valid():
+        fResult = ( result.temperature * (9 / 5) + 32)
         print("Last valid input: " + str(datetime.datetime.now()))
         print("Temperature: %.2f C" % result.temperature)
-        print("Humidity: %.2f %%" % result.humidity)
+       #im an American
+        print("Temperature: %.2f F" % fResult)
+        print("Humidity: %.2f %%\n" % result.humidity)
 
     time.sleep(1)
